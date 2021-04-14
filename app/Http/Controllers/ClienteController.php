@@ -15,16 +15,7 @@ class ClienteController extends Controller
     public function index()
     {
         //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return ['vou mandar' => 'mandei!'];
     }
 
     /**
@@ -45,17 +36,6 @@ class ClienteController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Cliente $cliente)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Cliente  $cliente
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Cliente $cliente)
     {
         //
     }
