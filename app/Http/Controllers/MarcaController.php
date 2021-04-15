@@ -51,7 +51,7 @@ class MarcaController extends Controller
         // imagem
 
         $request->validate($this->marca->rules(), $this->marca->feedback());
-        // stateless
+        // stateless => se houver um parâmetro inválido, retornar json informando o ocorrido
 
         $marca = $this->marca->create($request->all());
         return response()->json($marca, 201);
@@ -102,6 +102,25 @@ class MarcaController extends Controller
                 'erro' => 'Impossível realizar a atualização. O recurso solicitado não existe'
             ], 404);// segundo parâmetro => Status Code
         }
+
+        if ($request->method() === 'PATCH') {
+            
+            $dinamicRules = array();
+
+            // percorrendo todas as regras definidas no Model
+            foreach ($marca->rules() as $input => $rule) {
+
+                // coletar apenas as aplicáveis aos parâmetros parciais de requisição PATCH
+                if (array_key_exists($input, $request->all())) {
+                    $dinamicRules[$input] = $rule;
+                }
+            }
+            $request->validate($dinamicRules, $marca->feedback());
+
+        } else { // PUT
+            $request->validate($marca->rules(), $marca->feedback());
+        }
+
         $marca->update($request->all());
         return response()->json($marca, 200);
     }
