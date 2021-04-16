@@ -53,7 +53,20 @@ class MarcaController extends Controller
         $request->validate($this->marca->rules(), $this->marca->feedback());
         // stateless => se houver um parâmetro inválido, retornar json informando o ocorrido
 
-        $marca = $this->marca->create($request->all());
+        
+        $imagem = $request->file('imagem');
+        $imagem_urn = $imagem->store('imagens', 'public');
+
+        $marca = $this->marca->create([
+            'nome' => $request->nome,
+            'imagem' => $imagem_urn
+        ]);
+
+        /* -- Outra Opção --
+        $marca->nome = $request->nome;
+        $marca->imagem = $imagem_urn;
+        $marca->save();
+        */
         return response()->json($marca, 201);
     }
 
