@@ -19,13 +19,37 @@ class ModeloController extends Controller
     }
     /**
      * Display a listing of the resource.
-     *
+     * 
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $modelos = $this->modelo->all();
+        $modelos = array();
+
+        if ($request->has('atributos_marca')) {
+            $atributos_marca = $request->atributos_marca;
+            $modelos = $this->modelo->with('marca:id,'. $atributos_marca);
+        } else {
+            $modelos = $this->modelo->with('marca');
+        }
+
+        if ($request->has('filtro')) {
+            $condicoes = explode(':', $request->filtro);
+            $modelos = $modelos->where($condicoes[0], $condicoes[1], $condicoes[2]);
+            //                        (<valor>, <operador>, <valor>) 
+        }
+
+        if ($request->has('atributos')){ // verificando se parâmetro existe
+            $atributos = $request->atributos;
+            $modelos = $modelos->selectRaw($atributos)->get();
+        } else {
+            $modelos = $modelos->get();
+        }
+        // $modelos = $this->modelo->with('marca')->get();
         return response()->json($modelos, 200);
+        // all() -> criando um obj de consulta + get() = collection
+        // get() -> possibilidade de modificar a consulta -> collection
     }
 
 
@@ -63,7 +87,7 @@ class ModeloController extends Controller
      */
     public function show(int $id)
     {
-        $modelo = $this->modelo->find($id);
+        $modelo = $this->modelo->with('marca')->find($id);
         if ($modelo === null) {
             return response()->json([
                 'erro' => 'Recurso pesquisado não existe'
@@ -117,6 +141,10 @@ class ModeloController extends Controller
         $imagem = $request->file('imagem');
         $imagem_urn = $imagem->store('imagens/modelos', 'public');
 
+        $modelo->fill($request->all());
+        $modelo->imagem = $imagem_urn;
+        $modelo->save();
+        /*
         $modelo->update([
             'marca_id' => $request->marca_id,
             'nome' => $request->nome,
@@ -126,7 +154,7 @@ class ModeloController extends Controller
             'air_bag' => $request->air_bag,
             'abs' => $request->abs
         ]);
-
+        */
         return response()->json($modelo, 200);
     }
 
