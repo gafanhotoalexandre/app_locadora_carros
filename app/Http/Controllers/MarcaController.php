@@ -136,19 +136,21 @@ class MarcaController extends Controller
         }
 
         // remove o arquivo antigo caso um novo arquivo tenha sido enviado no request
+        // e salva a nova imagem retornando o caminho para $imagem_urn
         if ($request->file('imagem')) {
             Storage::disk('public')->delete($marca->imagem);
+
+            $imagem = $request->file('imagem');
+            $imagem_urn = $imagem->store('imagens', 'public');    
         }
 
-        $imagem = $request->file('imagem');
-        $imagem_urn = $imagem->store('imagens', 'public');
 
         // preencher o objeto $marca com os dados do request
         $marca->fill($request->all());
-        $marca->imagem = $imagem_urn;
-
+        $marca->imagem = $imagem_urn ?? $marca->imagem;
         // método save() atualiza se existir um id, ou cria um novo caso não tenha
         $marca->save();
+
         // $marca->update([
         //     'nome' => $request->nome,
         //     'imagem' => $imagem_urn

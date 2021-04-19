@@ -35,9 +35,14 @@ class ModeloController extends Controller
         }
 
         if ($request->has('filtro')) {
-            $condicoes = explode(':', $request->filtro);
-            $modelos = $modelos->where($condicoes[0], $condicoes[1], $condicoes[2]);
-            //                        (<valor>, <operador>, <valor>) 
+            $filtros = explode(';', $request->filtro);
+
+            foreach($filtros as $key => $condicao) {
+
+                $c = explode(':', $condicao);
+                $modelos = $modelos->where($c[0], $c[1], $c[2]);
+            //                            (<valor>, <operador>, <valor>) 
+            }
         }
 
         if ($request->has('atributos')){ // verificando se parâmetro existe
@@ -134,15 +139,16 @@ class ModeloController extends Controller
         }
 
         // remove o arquivo antigo caso um novo arquivo tenha sido enviado no request
+        // e salva a nova imagem retornando o caminho para $imagem_urn
         if ($request->file('imagem')) {
             Storage::disk('public')->delete($modelo->imagem);
+
+            $imagem = $request->file('imagem');
+            $imagem_urn = $imagem->store('imagens/modelos', 'public');
         }
 
-        $imagem = $request->file('imagem');
-        $imagem_urn = $imagem->store('imagens/modelos', 'public');
-
         $modelo->fill($request->all());
-        $modelo->imagem = $imagem_urn;
+        $modelo->imagem = $imagem_urn ?? $modelo->imagem;
         $modelo->save();
         /*
         $modelo->update([
