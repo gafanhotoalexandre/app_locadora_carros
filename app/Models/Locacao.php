@@ -24,8 +24,8 @@ class Locacao extends Model
     public function rules()
     {
         return [
-            'cliente_id'                   => 'exists:cliente,id',
-            'carro_id'                     => 'exists:carro,id',
+            'cliente_id'                   => 'exists:clientes,id',
+            'carro_id'                     => 'exists:carros,id',
             'data_inicio_periodo'          => 'required|date|date_format:Y-m-d',
             'data_final_previsto_periodo'  => 'required|date|date_format:Y-m-d',
             'data_final_realizado_periodo' => 'required|date|date_format:Y-m-d',
