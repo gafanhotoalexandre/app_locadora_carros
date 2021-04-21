@@ -8,5 +8,31 @@ use Illuminate\Database\Eloquent\Model;
 class Locacao extends Model
 {
     use HasFactory;
+
     protected $table = 'locacoes';
+    protected $fillable = [
+        'cliente_id',
+        'carro_id',
+        'data_inicio_periodo',
+        'data_final_previsto_periodo',
+        'data_final_realizado_periodo',
+        'valor_diaria',
+        'km_inicial',
+        'km_final'
+    ];
+
+    public function rules()
+    {
+        return [
+            'cliente_id'                   => 'exists:cliente,id',
+            'carro_id'                     => 'exists:carro,id',
+            'data_inicio_periodo'          => 'required|date|date_format:Y-m-d',
+            'data_final_previsto_periodo'  => 'required|date|date_format:Y-m-d',
+            'data_final_realizado_periodo' => 'required|date|date_format:Y-m-d',
+            'valor_diaria'                 => 'required',
+            'km_inicial'                   => 'required',
+            'km_final'                     => 'required'
+    
+        ];
+    }
 }
