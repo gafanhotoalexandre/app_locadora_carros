@@ -14,6 +14,8 @@ class AuthController extends Controller
         $token = auth('api')->attempt($credenciais);
 
         if ($token) {// Usuário autenticado com sucesso
+
+        // retornar um JWT (Json Web Token)
             return response()->json([
                 'token' => $token
             ], 200);            
@@ -26,7 +28,6 @@ class AuthController extends Controller
             // erro 403 = forbidden -> proibido (login inválido)
         }
 
-        // retornar um JWT (Json Web Token)
         return 'login';
     }
 
