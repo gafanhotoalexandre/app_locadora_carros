@@ -2,21 +2,23 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
+
+                <!-- Início Card de Buscas -->
                 <div class="card">
                     <div class="card-header">Busca de marcas</div>
 
                     <div class="card-body">
                         <div class="form-row">
                             <div class="col-md mb-3">
-                                <label for="inputId" class="form-label">ID</label>
-                                <input type="number" class="form-control" id="inputId" aria-describedby="idlHelp">
-                                <div id="idlHelp" class="form-text text-muted">Opcional. Informe o ID do registro.</div>
+                                <input-container-component titulo="ID" id="inputId" id-help="idHelp" texto-ajuda="Opcional. Informe o ID da marca.">
+                                    <input type="number" class="form-control" id="inputId" aria-describedby="idlHelp">
+                                </input-container-component>
                             </div>
 
                             <div class="col-md mb-3">
-                                <label for="inputNome" class="form-label">Nome</label>
-                                <input type="text" class="form-control" id="inputNome" aria-describedby="nomelHelp">
-                                <div id="nomelHelp" class="form-text text-muted">Opcional. Informe o nome da marca.</div>
+                                <input-container-component titulo="Nome da marca" id="inputNome" id-help="nomeHelp" texto-ajuda="Opcional. Informe o nome da marca.">
+                                    <input type="text" class="form-control" id="inputNome" aria-describedby="nomeHelp">
+                                </input-container-component>
                             </div>
                         </div>
                     </div>
@@ -25,6 +27,11 @@
                         <button type="submit" class="btn btn-primary btn-sm float-right">Pesquisar</button>
                     </div>
                 </div>
+                <!-- Fim Card de Buscas -->
+
+                <!-- Início do Card de Listagem de Marcas -->
+                <!-- Fim do Card de Listagem de Marcas -->
+
             </div>
         </div>
     </div>
