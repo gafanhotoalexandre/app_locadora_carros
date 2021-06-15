@@ -4,8 +4,8 @@
             <div class="col-md-8">
 
                 <!-- Início Card de Buscas -->
-                <div class="card">
-                    <div class="card-header">Busca de marcas</div>
+                <div class="card mb-3">
+                    <div class="card-header">Busca de Marcas</div>
 
                     <div class="card-body">
                         <div class="form-row">
@@ -30,6 +30,17 @@
                 <!-- Fim Card de Buscas -->
 
                 <!-- Início do Card de Listagem de Marcas -->
+                <div class="card">
+                    <div class="card-header">Relação de Marcas</div>
+
+                    <div class="card-body">
+                        <table-component></table-component>
+                    </div>
+
+                    <div class="card-footer">
+                        <button type="button" class="btn btn-primary btn-sm float-right">Adicionar</button>
+                    </div>
+                </div>
                 <!-- Fim do Card de Listagem de Marcas -->
 
             </div>
