@@ -1,7 +1,7 @@
 <template>
     <!-- Início Card de Buscas -->
     <div class="card mb-3">
-        <div class="card-header">Título - {{ titulo }}</div>
+        <div class="card-header">{{ titulo }}</div>
 
         <div class="card-body">
             <slot name="conteudo"></slot>
